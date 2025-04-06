@@ -206,20 +206,165 @@
 // 11
 // Створи функцію, яка повертає ключі з об'єкта, де значення мають тип string.
 
-function filterKeys<T extends object>(obj: T): (keyof T)[] {
-  const filteredKeys: (keyof T)[] = [];
-  for (const key in obj) {
-    if (typeof obj[key] === "string") {
-      filteredKeys.push(key);
-    }
-  }
-  return filteredKeys;
-}
+// function filterKeys<T extends object>(obj: T): (keyof T)[] {
+//   const filteredKeys: (keyof T)[] = [];
+//   for (const key in obj) {
+//     if (typeof obj[key] === "string") {
+//       filteredKeys.push(key);
+//     }
+//   }
+//   return filteredKeys;
+// }
 
-const student = {
-  id: 1,
-  name: "Ann",
-  age: 20,
-};
+// const student = {
+//   id: 1,
+//   name: "Ann",
+//   age: 20,
+// };
 
-console.log(filterKeys(student));
+// console.log(filterKeys(student));
+
+// 12. Напиши функцію objectToArray, яка перетворює об'єкт Record<string, T> у масив [key, value].
+
+// const data = { a: 1, b: 2, c: 3 };
+
+// function objectToArray<T>(data: Record<string, T>): [string, T][] {
+//   const result: [string, T][] = [];
+
+//   for (const key in data) {
+//     result.push([key, data[key]]);
+//   }
+
+//   return result
+// }
+
+// const entries = objectToArray(data); // ➤ [["a",1],["b",2],["c",3]]
+// console.log(entries);
+
+// 13. Напиши функцію isEmpty, яка перевіряє, чи є об'єкт або масив порожнім.
+
+// function isEmpty<T>(obj: T): boolean {
+//     let result = false;
+
+//     if (Array.isArray(obj) && obj.length === 0) {
+//         result = true;
+//     } else if (typeof obj === "object" && obj !== null && Object.keys(obj).length === 0) {
+//         result = true;
+//     }
+//     return result;
+// }
+
+// console.log(isEmpty({}));
+// console.log(isEmpty({ a: 1 }));
+// console.log(isEmpty([]));
+// console.log(isEmpty([1]));
+
+// 14. Напиши generic-функцію pluck, яка бере масив об'єктів і ключ, і повертає масив значень цього ключа.
+
+// type User = {
+//     name: string;
+//     age: number;
+// };
+
+// const users: User[] = [
+//     { name: "Anna", age: 25 },
+//     { name: "Bohdan", age: 30 },
+// ];
+
+// function pluck<O, K extends keyof O>(data: O[], key: K): O[K][] {
+//     const result = data.map((obj) => {
+//         return obj[key];
+//     });
+//     return result;
+// }
+
+// const names = pluck(users, "name"); // ➤ ["Anna", "Bohdan"]
+// console.log(names);
+
+// 15. Напиши функцію getLengthSafe, яка повертає довжину, якщо значення — рядок або масив.
+
+// function getLengthSafe(data: unknown): number | null {
+//     if (typeof data === "string" || Array.isArray(data)) return data.length;
+//     return null;
+// }
+
+// console.log(getLengthSafe([123, 456, 789]));
+// console.log(getLengthSafe("qwerty"));
+// console.log(getLengthSafe(12345));
+
+// 16. shape, cycle,
+
+// abstract class Shape {
+//     constructor(public color: string) {}
+
+//     abstract getArea(): number;
+// }
+
+// class Cycle extends Shape {
+//     constructor(color: string, public radius: number) {
+//         super(color);
+//     }
+
+//     public getArea(): number {
+//         return this.radius ** 2 * Math.PI;
+//     }
+// }
+
+// const cycle = new Cycle("Green", 16);
+// const area = cycle.getArea();
+// console.log(area);
+
+// 17. Person
+
+// class Person {
+//     protected name: string;
+
+//     constructor(name: string) {
+//         this.name = name;
+//     }
+
+//     introduce(): string {
+//         return `Hello, I am ${this.name}`;
+//     }
+// }
+
+// class Employee extends Person {
+//     protected position: string;
+
+//     constructor(name: string, position: string) {
+//         super(name);
+//         this.position = position;
+//     }
+
+//     getDetails(): string {
+//         return `${this.name} is ${this.position}`;
+//     }
+// }
+
+// class Manager extends Employee {
+//     changeName(newName: string): void {
+//         this.name = newName;
+//     }
+// }
+
+// const m = new Manager("Stepan", "Developer");
+// console.log(m.getDetails());
+// m.changeName("Roma");
+// console.log(m.getDetails());
+
+// 16. Створи generic-функцію mapObjectValues, яка перетворює значення об'єкта за допомогою колбек-функції.
+
+// const prices = { apple: 1, banana: 2 };
+
+// function mapObjectValues<T, F>(obj: Record<string, T>, callback: (value: T) => F): Record<string, F> {
+//     const result = {};
+
+//     for (const key in obj) {
+//         result[key] = callback(obj[key]);
+//     }
+
+//     return result;
+// }
+
+// const withTax = mapObjectValues(prices, (price) => price * 1.2);
+// console.log(withTax); // { apple: 1.2, banana: 2.4 }
